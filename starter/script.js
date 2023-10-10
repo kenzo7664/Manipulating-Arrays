@@ -73,28 +73,28 @@ const inputClosePin = document.querySelector('.form__input--pin');
 
 // const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 // Coding Challenge
-const juliaData = [3, 5, 2, 12, 7]
-const kateData = [4, 1, 15, 8, 3]
+// const juliaData = [3, 5, 2, 12, 7]
+// const kateData = [4, 1, 15, 8, 3]
 
-const juliaData1 = [...juliaData]
-const juliaDataCorrected = juliaData1.slice(1, -2)
-console.log(juliaDataCorrected);
+// const juliaData1 = [...juliaData]
+// const juliaDataCorrected = juliaData1.slice(1, -2)
+// console.log(juliaDataCorrected);
 
-const newCorrectedData = [...juliaDataCorrected, ...kateData]
-console.log(newCorrectedData);
+// const newCorrectedData = [...juliaDataCorrected, ...kateData]
+// console.log(newCorrectedData);
 
 
-function checkDogs(arr) {
-  arr.forEach((value, i) => {
-    if (value >= 3) {
-      console.log(`Dog number ${i + 1} is an adult, and is ${value} years old`);
-    } else {
-      console.log(`Dog number ${i + 1} is a puppy`);
-    }
-  })
+// function checkDogs(arr) {
+//   arr.forEach((value, i) => {
+//     if (value >= 3) {
+//       console.log(`Dog number ${i + 1} is an adult, and is ${value} years old`);
+//     } else {
+//       console.log(`Dog number ${i + 1} is a puppy`);
+//     }
+//   })
 
-}
-checkDogs(newCorrectedData)
+// }
+// checkDogs(newCorrectedData)
 
 
 // TEST DATA 1: Julia's data [3, 5, 2, 12, 7], Kate's data [4, 1, 15, 8, 3]
@@ -169,6 +169,32 @@ console.log([...arr]);
 //   console.log(`${value}: ${value}`);
 // })
 
+
+// Map method
+// const gbpToNgn = 1.4
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// // Using arrow function
+// const movementsNGN = movements.map((mov) => mov * gbpToNgn)
+// console.log(movementsNGN);
+// // const moveDesc = movements.map((move, index, array) => {
+// //   if (move > 0) {
+// //     return (`Transaction ${index + 1}: You deposited ${move}`);
+// //   } else {
+// //     return (`Transaction ${index + 1}: You withdrew ${move}`);
+// //   }
+// // })
+
+// const moveDesc = movements.map((move ,index)=>(
+//   `Transaction ${index + 1}: You ${move>0 ? "deposited" : "withdrew"} ${Math.abs(move)}`
+// ))
+// console.log(moveDesc);
+
+
+//Filter method
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+const deposits = movements.filter((mov) => mov > 0)
+const withdrawals = movements.filter((mov) => mov < 0)
+console.log(`Withdrawals : ${withdrawals} Deposits: ${deposits}`);
 
 // Bank App
 const displayMovements = function (movement) {
