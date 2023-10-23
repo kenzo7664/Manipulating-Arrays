@@ -71,17 +71,35 @@ const inputClosePin = document.querySelector('.form__input--pin');
 //   ['GBP', 'Pound sterling'],
 // ]);
 
-// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
-// Coding Challenge
-// const juliaData = [3, 5, 2, 12, 7]
-// const kateData = [4, 1, 15, 8, 3]
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+//Coding Challenge
+const juliaData = [3, 5, 2, 12, 7]
+const kateData = [4, 1, 15, 8, 3]
 
-// const juliaData1 = [...juliaData]
-// const juliaDataCorrected = juliaData1.slice(1, -2)
-// console.log(juliaDataCorrected);
+const juliaData1 = [...juliaData]
+const juliaDataCorrected = juliaData1.slice(1, -2)
+console.log(juliaDataCorrected);
 
-// const newCorrectedData = [...juliaDataCorrected, ...kateData]
-// console.log(newCorrectedData);
+const newCorrectedData = [...juliaDataCorrected, ...kateData]
+console.log(newCorrectedData);
+// Coding challenge 2
+function dogToHuman(arr) {
+  let humanAge = arr.map((age, index) => {
+    if (age <= 2) {
+      return 2 * age
+    } else if (age > 2) {
+      return 16 + (age * 4)
+    }
+  })
+  return humanAge
+}
+let newDogToHuman = dogToHuman(newCorrectedData)
+console.log(newDogToHuman);
+const dogGreaterThan = newDogToHuman.filter((val) => val >= 18)
+console.log(dogGreaterThan);
+
+const average = dogGreaterThan.reduce((acc, cur, index, arr) => (acc + cur / arr.length), 0)
+console.log(average);
 
 
 // function checkDogs(arr) {
@@ -191,10 +209,22 @@ console.log([...arr]);
 
 
 //Filter method
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
-const deposits = movements.filter((mov) => mov > 0)
-const withdrawals = movements.filter((mov) => mov < 0)
-console.log(`Withdrawals : ${withdrawals} Deposits: ${deposits}`);
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// const deposits = movements.filter((mov) => mov > 0)
+// const withdrawals = movements.filter((mov) => mov < 0)
+// console.log(`Withdrawals : ${withdrawals} Deposits: ${deposits}`);
+
+//Reduce Method
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// const balance1 = movements.reduce(function (acc, cur, u, arr) {
+//   return acc + cur
+// }, 0)
+// const balance = movements.reduce((acc, cur) => acc + cur, 0)
+// console.log(balance, balance1);
+// const max = movements.reduce((acc, mov) => {
+//   return acc > mov ? acc : mov
+// }, movements[0])
+// console.log(max);
 
 // Bank App
 const displayMovements = function (movement) {
@@ -214,4 +244,10 @@ const displayMovements = function (movement) {
   })
 }
 displayMovements(account1.movements)
+
+const calcDisplayBalance = function (movements) {
+  const balance = movements.reduce((acc, cur) => acc + cur, 0)
+  labelBalance.textContent = `£ ${balance}`
+}
+calcDisplayBalance(account1.movements)
 
