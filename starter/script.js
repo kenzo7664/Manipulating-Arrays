@@ -65,13 +65,7 @@ const inputClosePin = document.querySelector('.form__input--pin');
 /////////////////////////////////////////////////
 // LECTURES
 
-// const currencies = new Map([
-//   ['USD', 'United States dollar'],
-//   ['EUR', 'Euro'],
-//   ['GBP', 'Pound sterling'],
-// ]);
-
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 //Coding Challenge
 const juliaData = [3, 5, 2, 12, 7]
 const kateData = [4, 1, 15, 8, 3]
@@ -83,23 +77,32 @@ console.log(juliaDataCorrected);
 const newCorrectedData = [...juliaDataCorrected, ...kateData]
 console.log(newCorrectedData);
 // Coding challenge 2
-function dogToHuman(arr) {
-  let humanAge = arr.map((age, index) => {
-    if (age <= 2) {
-      return 2 * age
-    } else if (age > 2) {
-      return 16 + (age * 4)
-    }
-  })
-  return humanAge
+// function dogToHuman(arr) {
+//   let humanAge = arr.map((age, index) => {
+//     if (age <= 2) {
+//       return 2 * age
+//     } else if (age > 2) {
+//       return 16 + (age * 4)
+//     }
+//   })
+//   const dogGreaterThan = humanAge.filter((val) => val >= 18)
+//   const average = dogGreaterThan.reduce((acc, cur, index, arr) => (acc + cur / arr.length), 0)
+//   return average
+
+// }
+// let newDogToHuman = dogToHuman(newCorrectedData)
+// console.log(newDogToHuman);
+
+
+// Coding Challenge 3
+const dogToHuman = (arr) => {
+  let humanAge = arr.map((age) => age <= 2 ? 2 * age : 16 + age * 4)
+  const average = humanAge.filter((val) => val >= 18)
+    .reduce((acc, cur, ind, arr) => (acc + cur / arr.length), 0)
+  return average
 }
 let newDogToHuman = dogToHuman(newCorrectedData)
 console.log(newDogToHuman);
-const dogGreaterThan = newDogToHuman.filter((val) => val >= 18)
-console.log(dogGreaterThan);
-
-const average = dogGreaterThan.reduce((acc, cur, index, arr) => (acc + cur / arr.length), 0)
-console.log(average);
 
 
 // function checkDogs(arr) {
@@ -119,112 +122,18 @@ console.log(average);
 // TEST DATA 2: Julia's data [9, 16, 6, 8, 3], Kate's data [10, 5, 6, 1, 4]
 
 
+// Chaining Methods
+const gbpToNgn = 1.3
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+const totalDepositNGN = movements.filter((value, ind) => value > 0)
+  .map((value, index, arr) => {
+    console.log(arr);
+    return value * gbpToNgn
+  }
+  )
+  .reduce((acc, cur) => acc + cur, 0)
+console.log(totalDepositNGN);
 
-/////////////////////////////////////////////////
-// Simple Array Methods
-let arr = ['a', 'b', 'c', 'd', 'e'];
-
-// SLICE
-console.log(arr.slice(2));
-console.log(arr.slice(2, 4));
-console.log(arr.slice(-2));
-console.log(arr.slice(-1));
-console.log(arr.slice(1, -2));
-console.log(arr.slice());
-console.log([...arr]);
-
-// SPLICE
-// console.log(arr.splice(2));
-// arr.splice(-1);
-// console.log(arr);
-// arr.splice(1, 2);
-// console.log(arr);
-
-// // REVERSE
-// arr = ['a', 'b', 'c', 'd', 'e'];
-// const arr2 = ['j', 'i', 'h', 'g', 'f'];
-// console.log(arr2.reverse());
-// console.log(arr2);
-
-// // CONCAT
-// const letters = arr.concat(arr2);
-// console.log(letters);
-// console.log([...arr, ...arr2]);
-
-// // JOIN
-// console.log(letters.join(' - '));
-
-// // forEach method
-// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
-// for (const movement of movements) {
-//   if (movement > 0) {
-//     console.log(`You deposited ${movement}`);
-//   } else {
-//     console.log(`You withdrew ${movement}`);
-//   }
-// }
-
-// movements.forEach(function (move, index, array) {
-//   if (move > 0) {
-//     console.log(`Transaction ${index + 1}: You deposited ${move}`);
-//   } else {
-//     console.log(`Transaction ${index + 1}: You withdrew ${move}`);
-//   }
-// })
-
-// const currencies = new Map([
-//   ['USD', 'United States dollar'],
-//   ['EUR', 'Euro'],
-//   ['GBP', 'Pound sterling'],
-// ]);
-
-// currencies.forEach(function (value, key, map) {
-//   console.log(`${key}: ${value}`);
-// })
-
-// const currenciesUnique = new Set(['NGN', 'RND', 'GBP', 'GBP', 'EUR', 'NGN', "USD", "EUR"])
-// currenciesUnique.forEach(function (value, _, map) {
-//   console.log(`${value}: ${value}`);
-// })
-
-
-// Map method
-// const gbpToNgn = 1.4
-// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
-// // Using arrow function
-// const movementsNGN = movements.map((mov) => mov * gbpToNgn)
-// console.log(movementsNGN);
-// // const moveDesc = movements.map((move, index, array) => {
-// //   if (move > 0) {
-// //     return (`Transaction ${index + 1}: You deposited ${move}`);
-// //   } else {
-// //     return (`Transaction ${index + 1}: You withdrew ${move}`);
-// //   }
-// // })
-
-// const moveDesc = movements.map((move ,index)=>(
-//   `Transaction ${index + 1}: You ${move>0 ? "deposited" : "withdrew"} ${Math.abs(move)}`
-// ))
-// console.log(moveDesc);
-
-
-//Filter method
-// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
-// const deposits = movements.filter((mov) => mov > 0)
-// const withdrawals = movements.filter((mov) => mov < 0)
-// console.log(`Withdrawals : ${withdrawals} Deposits: ${deposits}`);
-
-//Reduce Method
-// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
-// const balance1 = movements.reduce(function (acc, cur, u, arr) {
-//   return acc + cur
-// }, 0)
-// const balance = movements.reduce((acc, cur) => acc + cur, 0)
-// console.log(balance, balance1);
-// const max = movements.reduce((acc, mov) => {
-//   return acc > mov ? acc : mov
-// }, movements[0])
-// console.log(max);
 
 // Bank App
 const displayMovements = function (movement) {
@@ -245,9 +154,25 @@ const displayMovements = function (movement) {
 }
 displayMovements(account1.movements)
 
+
 const calcDisplayBalance = function (movements) {
   const balance = movements.reduce((acc, cur) => acc + cur, 0)
   labelBalance.textContent = `£ ${balance}`
 }
 calcDisplayBalance(account1.movements)
 
+const calcDisplaySummary = function (movement, rate) {
+  const iN = movement.filter((val => val > 0)).reduce((acc, cur) => acc + cur, 0)
+  const out = movement.filter((val => val < 0)).reduce((acc, cur) => acc + cur, 0)
+  labelSumIn.textContent = `${iN}£`
+  labelSumOut.textContent = `${Math.abs(out)}£`
+  // Interest on each deposit and add the interest if it is greater than or equal to 1
+  const interest = movements.filter((val) => val > 0)
+    .map((val) => (val * rate) / 100)
+    .filter((val) => val >= 1)
+    .reduce((acc, cur) => acc + cur, 0)
+  labelSumInterest.textContent = `${interest}£`
+
+
+}
+calcDisplaySummary(account1.movements, account1.interestRate)
