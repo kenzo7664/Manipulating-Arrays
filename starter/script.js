@@ -95,14 +95,14 @@ console.log(newCorrectedData);
 
 
 // Coding Challenge 3
-const dogToHuman = (arr) => {
-  let humanAge = arr.map((age) => age <= 2 ? 2 * age : 16 + age * 4)
-  const average = humanAge.filter((val) => val >= 18)
-    .reduce((acc, cur, ind, arr) => (acc + cur / arr.length), 0)
-  return average
-}
-let newDogToHuman = dogToHuman(newCorrectedData)
-console.log(newDogToHuman);
+// const dogToHuman = (arr) => {
+//   let humanAge = arr.map((age) => age <= 2 ? 2 * age : 16 + age * 4)
+//   const average = humanAge.filter((val) => val >= 18)
+//     .reduce((acc, cur, ind, arr) => (acc + cur / arr.length), 0)
+//   return average
+// }
+// let newDogToHuman = dogToHuman(newCorrectedData)
+// console.log(newDogToHuman);
 
 
 // function checkDogs(arr) {
@@ -123,17 +123,23 @@ console.log(newDogToHuman);
 
 
 // Chaining Methods
-const gbpToNgn = 1.3
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
-const totalDepositNGN = movements.filter((value, ind) => value > 0)
-  .map((value, index, arr) => {
-    console.log(arr);
-    return value * gbpToNgn
-  }
-  )
-  .reduce((acc, cur) => acc + cur, 0)
-console.log(totalDepositNGN);
+// const gbpToNgn = 1.3
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// const totalDepositNGN = movements.filter((value, ind) => value > 0)
+//   .map((value, index, arr) => {
+//     console.log(arr);
+//     return value * gbpToNgn
+//   }
+//   )
+//   .reduce((acc, cur) => acc + cur, 0)
+// console.log(totalDepositNGN);
 
+// Find Method
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// const firstWithdrawal = movements.find(mov => mov < 0)
+// console.log(firstWithdrawal);
+// const account = accounts.find(acc => acc.owner = "Jessica Davis")
+// console.log(account);
 
 // Bank App
 const displayMovements = function (movement) {
@@ -152,27 +158,66 @@ const displayMovements = function (movement) {
     containerMovements.insertAdjacentHTML('afterbegin', html)
   })
 }
-displayMovements(account1.movements)
 
 
-const calcDisplayBalance = function (movements) {
-  const balance = movements.reduce((acc, cur) => acc + cur, 0)
+
+const calcDisplayBalance = function (account) {
+  const balance = account.movements.reduce((acc, cur) => acc + cur, 0)
   labelBalance.textContent = `£ ${balance}`
 }
-calcDisplayBalance(account1.movements)
 
-const calcDisplaySummary = function (movement, rate) {
-  const iN = movement.filter((val => val > 0)).reduce((acc, cur) => acc + cur, 0)
-  const out = movement.filter((val => val < 0)).reduce((acc, cur) => acc + cur, 0)
+
+const calcDisplaySummary = function (account) {
+  console.log(account.movements);
+  const iN = account.movements.filter((val => val > 0)).reduce((acc, cur) => acc + cur, 0)
+  console.log(iN);
+  const out = account.movements.filter((val => val < 0)).reduce((acc, cur) => acc + cur, 0)
   labelSumIn.textContent = `${iN}£`
   labelSumOut.textContent = `${Math.abs(out)}£`
   // Interest on each deposit and add the interest if it is greater than or equal to 1
-  const interest = movements.filter((val) => val > 0)
-    .map((val) => (val * rate) / 100)
+  const interest = account.movements.filter((val) => val > 0)
+    .map((val) => (val * account.interestRate) / 100)
     .filter((val) => val >= 1)
     .reduce((acc, cur) => acc + cur, 0)
   labelSumInterest.textContent = `${interest}£`
 
 
 }
-calcDisplaySummary(account1.movements, account1.interestRate)
+
+
+const createUsernames = function (accs) {
+  accs.forEach(function (acc) {
+    acc.username = acc.owner
+      .toLowerCase()
+      .split(' ')
+      .map(name => name[0])
+      .join('')
+  })
+}
+createUsernames(accounts)
+
+// EventHandlers
+let currentAccount
+btnLogin.addEventListener("click", function (e) {
+  e.preventDefault()
+  currentAccount = accounts.find(acc => acc.username === inputLoginUsername.value)
+  if (currentAccount === undefined) {
+    alert("User does not exist please try again")
+  }
+  if (currentAccount?.pin === Number(inputLoginPin.value)) {
+    // Clear input fields
+    inputLoginUsername.value = inputLoginPin.value = ""
+    inputLoginPin.blur()
+    // Display UI and welcome message
+    labelWelcome.textContent = `Welcome Back, ${currentAccount.owner.split(" ")[0]}`
+    containerApp.style.opacity = 100;
+  }
+  // Display Transactions
+  displayMovements(currentAccount.movements)
+
+  // Display Total Balance
+  calcDisplayBalance(currentAccount)
+
+  // Display Interest, In and Outs
+  calcDisplaySummary(currentAccount)
+})
