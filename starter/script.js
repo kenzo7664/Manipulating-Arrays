@@ -168,9 +168,7 @@ const calcDisplayBalance = function (account) {
 
 
 const calcDisplaySummary = function (account) {
-  console.log(account.movements);
   const iN = account.movements.filter((val => val > 0)).reduce((acc, cur) => acc + cur, 0)
-  console.log(iN);
   const out = account.movements.filter((val => val < 0)).reduce((acc, cur) => acc + cur, 0)
   labelSumIn.textContent = `${iN}£`
   labelSumOut.textContent = `${Math.abs(out)}£`
@@ -184,6 +182,14 @@ const calcDisplaySummary = function (account) {
 
 }
 
+const accountBalance = function (accs) {
+  accs.forEach(function (acc) {
+    acc.balance = acc.movements
+      .reduce((a, b) => a + b, 0)
+  })
+
+}
+accountBalance(accounts)
 
 const createUsernames = function (accs) {
   accs.forEach(function (acc) {
@@ -195,6 +201,17 @@ const createUsernames = function (accs) {
   })
 }
 createUsernames(accounts)
+
+const updateUI = function (acc) {
+  // Display Transactions
+  displayMovements(acc.movements)
+
+  // Display Total Balance
+  calcDisplayBalance(acc)
+
+  // Display Interest, In and Outs
+  calcDisplaySummary(acc)
+}
 
 // EventHandlers
 let currentAccount
@@ -212,12 +229,27 @@ btnLogin.addEventListener("click", function (e) {
     labelWelcome.textContent = `Welcome Back, ${currentAccount.owner.split(" ")[0]}`
     containerApp.style.opacity = 100;
   }
-  // Display Transactions
-  displayMovements(currentAccount.movements)
 
-  // Display Total Balance
-  calcDisplayBalance(currentAccount)
-
-  // Display Interest, In and Outs
-  calcDisplaySummary(currentAccount)
+  updateUI(currentAccount)
+  // Implement an opacity display and error message for when the username and pin are not correct
 })
+btnTransfer.addEventListener('click', function (e) {
+  e.preventDefault()
+  let amount = Number(inputTransferAmount.value)
+  let receiverAccount = accounts.find(acc => acc.username === inputTransferTo.value)
+
+  if (receiverAccount && amount > 0 &&
+    currentAccount.balance >= amount &&
+    receiverAccount?.username !== currentAccount.username) {
+    // Performing the Transfer
+    currentAccount.movements.push(-amount)
+    receiverAccount.movements.push(amount)
+
+
+    // Update UI
+    updateUI(currentAccount)
+  }
+
+  inputTransferAmount.value = inputTransferTo.value = ""
+})
+
