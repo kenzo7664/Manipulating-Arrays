@@ -141,6 +141,18 @@ console.log(newCorrectedData);
 // const account = accounts.find(acc => acc.owner = "Jessica Davis")
 // console.log(account);
 
+// some and every Method
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+console.log(movements);
+// Equality
+console.log(movements.includes(-130));
+// Condition
+const anyDeposits = movements.some(mov => mov > 5000)
+console.log(anyDeposits);
+
+console.log(movements.every(mov => mov > 0));
+
+
 // Bank App
 const displayMovements = function (movement) {
   containerMovements.innerHTML = '';
@@ -233,6 +245,7 @@ btnLogin.addEventListener("click", function (e) {
   updateUI(currentAccount)
   // Implement an opacity display and error message for when the username and pin are not correct
 })
+// Transfer
 btnTransfer.addEventListener('click', function (e) {
   e.preventDefault()
   let amount = Number(inputTransferAmount.value)
@@ -252,4 +265,46 @@ btnTransfer.addEventListener('click', function (e) {
 
   inputTransferAmount.value = inputTransferTo.value = ""
 })
+
+// Request Loan 
+btnLoan.addEventListener('click', function (e) {
+  e.preventDefault()
+  const amount = Number(inputLoanAmount.value)
+
+  if (amount > 0 &&
+    currentAccount.movements
+      .some((mov) => mov >= amount * 0.1)) {
+    // Add the laon amount to the transaction list
+    currentAccount.movements.push(amount)
+
+    // update UI
+    updateUI(currentAccount)
+  }
+
+  inputLoanAmount.value = ""
+})
+// Delete Account
+btnClose.addEventListener('click', function (e) {
+  e.preventDefault()
+
+  if (inputCloseUsername.value === currentAccount.username
+    && Number(inputClosePin.value) === currentAccount.pin) {
+    const index = accounts.findIndex((acc => acc.username === currentAccount.username))
+    console.log(index);
+
+    // Delete account
+    accounts.splice(index, 1)
+
+
+
+    // Hide UI after deleting account
+    containerApp.style.opacity = 0;
+
+
+    labelWelcome.textContent = `Log in to get started`
+  }
+  inputCloseUsername.value = inputClosePin.value = ""
+
+})
+
 
