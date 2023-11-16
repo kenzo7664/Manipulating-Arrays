@@ -143,20 +143,62 @@ console.log(newCorrectedData);
 
 // some and every Method
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
-console.log(movements);
-// Equality
-console.log(movements.includes(-130));
-// Condition
-const anyDeposits = movements.some(mov => mov > 5000)
-console.log(anyDeposits);
+// console.log(movements);
+// // Equality
+// console.log(movements.includes(-130));
+// // Condition
+// const anyDeposits = movements.some(mov => mov > 5000)
+// console.log(anyDeposits);
 
-console.log(movements.every(mov => mov > 0));
+// console.log(movements.every(mov => mov > 0));
 
+// Flat and FlatMap Method
+// const arr = [[1, 2, 3], [4, 5, 6], 7, 8]
+// console.log(arr.flat());
 
+// const deepArray = [[[1, 2], 3], [4, [5, 6]], 7, 8]
+
+// const overallBalance1 = accounts.map(acc => acc.movements)
+//   .flat()
+//   .reduce((acc, cur) => acc + cur, 0)
+
+// console.log(overallBalance1);
+
+// const overallBalance2 = accounts.flatMap(acc => acc.movements)
+//   .reduce((acc, cur) => acc + cur, 0)
+
+// console.log(overallBalance2);
+
+// Sort Method
+const owners = ["Jonas", "Zach", "Adam", "Martha"]
+console.log(owners.sort());
+
+// movements.sort((a, b) => {
+//   if (a > b)
+//     return 1
+//   if (a < b)
+//     return -1
+// })
+
+// // Sort array with numbers
+// movements.sort((a, b) => {
+//   return a - b
+// })
+// console.log(movements);
+
+// Array.from()
+const movementUI = Array.from(document.querySelectorAll('.movements__value'))
+
+labelBalance.addEventListener("click", function () {
+  const movementUI = Array.from(document.querySelectorAll('.movements__value'))
+  console.log(movementUI.map((mov) => Number(mov.outerText.replace("£", ""))).sort((a, b) => a - b));
+})
 // Bank App
-const displayMovements = function (movement) {
+const displayMovements = function (movement, sort = false) {
   containerMovements.innerHTML = '';
-  movement.forEach(function (move, i) {
+
+  const movs = sort ? movement.slice().sort((a, b) => a - b) : movement
+  movs.forEach(function (move, i) {
 
     const checker = move > 0 ? "deposit" : "withdrawal"
     const html = `
@@ -307,4 +349,10 @@ btnClose.addEventListener('click', function (e) {
 
 })
 
+let sorted = false;
+btnSort.addEventListener("click", function (e) {
+  e.preventDefault()
+  displayMovements(currentAccount.movements, !sorted)
+  sorted = !sorted
+})
 
