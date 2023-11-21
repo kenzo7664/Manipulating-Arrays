@@ -2,18 +2,18 @@
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
-// BANKIST APP
+// BANK APP
 
 // Data
 const account1 = {
-  owner: 'Jonas Schmedtmann',
+  owner: 'Emmanuel Kenzo',
   movements: [200, 450, -400, 3000, -650, -130, 70, 1300],
   interestRate: 1.2, // %
   pin: 1111,
 };
 
 const account2 = {
-  owner: 'Jessica Davis',
+  owner: 'Steven Gerrard',
   movements: [5000, 3400, -150, -790, -3210, -1000, 8500, -30],
   interestRate: 1.5,
   pin: 2222,
@@ -65,12 +65,127 @@ const inputClosePin = document.querySelector('.form__input--pin');
 /////////////////////////////////////////////////
 // LECTURES
 
-const currencies = new Map([
-  ['USD', 'United States dollar'],
-  ['EUR', 'Euro'],
-  ['GBP', 'Pound sterling'],
-]);
+// const currencies = new Map([
+//   ['USD', 'United States dollar'],
+//   ['EUR', 'Euro'],
+//   ['GBP', 'Pound sterling'],
+// ]);
 
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// Coding Challenge
+const juliaData = [3, 5, 2, 12, 7]
+const kateData = [4, 1, 15, 8, 3]
+
+const juliaData1 = [...juliaData]
+const juliaDataCorrected = juliaData1.slice(1, -2)
+console.log(juliaDataCorrected);
+
+const newCorrectedData = [...juliaDataCorrected, ...kateData]
+console.log(newCorrectedData);
+
+
+function checkDogs(arr) {
+  arr.forEach((value, i) => {
+    if (value >= 3) {
+      console.log(`Dog number ${i + 1} is an adult, and is ${value} years old`);
+    } else {
+      console.log(`Dog number ${i + 1} is a puppy`);
+    }
+  })
+
+}
+checkDogs(newCorrectedData)
+
+
+// TEST DATA 1: Julia's data [3, 5, 2, 12, 7], Kate's data [4, 1, 15, 8, 3]
+// TEST DATA 2: Julia's data [9, 16, 6, 8, 3], Kate's data [10, 5, 6, 1, 4]
+
+
 
 /////////////////////////////////////////////////
+// Simple Array Methods
+let arr = ['a', 'b', 'c', 'd', 'e'];
+
+// SLICE
+console.log(arr.slice(2));
+console.log(arr.slice(2, 4));
+console.log(arr.slice(-2));
+console.log(arr.slice(-1));
+console.log(arr.slice(1, -2));
+console.log(arr.slice());
+console.log([...arr]);
+
+// SPLICE
+// console.log(arr.splice(2));
+// arr.splice(-1);
+// console.log(arr);
+// arr.splice(1, 2);
+// console.log(arr);
+
+// // REVERSE
+// arr = ['a', 'b', 'c', 'd', 'e'];
+// const arr2 = ['j', 'i', 'h', 'g', 'f'];
+// console.log(arr2.reverse());
+// console.log(arr2);
+
+// // CONCAT
+// const letters = arr.concat(arr2);
+// console.log(letters);
+// console.log([...arr, ...arr2]);
+
+// // JOIN
+// console.log(letters.join(' - '));
+
+// // forEach method
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// for (const movement of movements) {
+//   if (movement > 0) {
+//     console.log(`You deposited ${movement}`);
+//   } else {
+//     console.log(`You withdrew ${movement}`);
+//   }
+// }
+
+// movements.forEach(function (move, index, array) {
+//   if (move > 0) {
+//     console.log(`Transaction ${index + 1}: You deposited ${move}`);
+//   } else {
+//     console.log(`Transaction ${index + 1}: You withdrew ${move}`);
+//   }
+// })
+
+// const currencies = new Map([
+//   ['USD', 'United States dollar'],
+//   ['EUR', 'Euro'],
+//   ['GBP', 'Pound sterling'],
+// ]);
+
+// currencies.forEach(function (value, key, map) {
+//   console.log(`${key}: ${value}`);
+// })
+
+// const currenciesUnique = new Set(['NGN', 'RND', 'GBP', 'GBP', 'EUR', 'NGN', "USD", "EUR"])
+// currenciesUnique.forEach(function (value, _, map) {
+//   console.log(`${value}: ${value}`);
+// })
+
+
+// Bank App
+const displayMovements = function (movement) {
+  containerMovements.innerHTML = '';
+  movement.forEach(function (move, i) {
+
+    const checker = move > 0 ? "deposit" : "withdrawal"
+    const html = `
+   <div class="movements__row">
+          <div class="movements__type movements__type--${checker}">${i + 1} ${checker}</div>
+          <div class="movements__date">3 days ago</div>
+          <div class="movements__value">${move}£</div>
+    </div>
+   
+   `;
+    containerMovements.insertAdjacentHTML('afterbegin', html)
+  })
+}
+displayMovements(account1.movements)
+
