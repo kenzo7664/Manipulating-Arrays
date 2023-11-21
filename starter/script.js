@@ -193,6 +193,44 @@ labelBalance.addEventListener("click", function () {
   const movementUI = Array.from(document.querySelectorAll('.movements__value'))
   console.log(movementUI.map((mov) => Number(mov.outerText.replace("£", ""))).sort((a, b) => a - b));
 })
+
+// Coding Challenge 4
+const dogs = [
+  { weight: 22, curFood: 250, owners: ['Alice', 'Bob'] },
+  { weight: 8, curFood: 200, owners: ['Matilda'] },
+  { weight: 13, curFood: 275, owners: ['Sarah', 'John'] },
+  { weight: 32, curFood: 340, owners: ['Michael'] },
+];
+
+dogs.forEach((dog) => dog.recFood = Math.trunc(dog.weight ** 0.75 * 28))
+console.log(dogs);
+
+const sarahDogs = dogs.find((dog) => dog.owners.includes("Sarah"))
+console.log(`Sarah's Dog is eating too ${sarahDogs.curFood > sarahDogs.recFood ? "Little" : "Much"}`);
+
+const ownersEatToMuch = dogs.filter((dog) => dog.curFood < dog.recFood)
+  .flatMap((dogs) => dogs.owners)
+console.log(ownersEatToMuch);
+
+const ownersEatToLittle = dogs.filter((dog) => dog.curFood > dog.recFood)
+  .flatMap((dogs) => dogs.owners)
+console.log(ownersEatToLittle);
+
+console.log(`${ownersEatToMuch.join(' and ')} dog's eat to much`);
+console.log(`${ownersEatToLittle.join(' and ')} dog's eat to little`);
+
+console.log(dogs.some((dog) => dog.curFood === dog.recFood));
+
+const eatingOkay = dog =>
+  (dog.curFood > dog.recFood * 0.9) && (dog.curFood < dog.recFood * 1.1)
+
+console.log(dogs.some(eatingOkay));
+
+console.log(dogs.filter(eatingOkay));
+
+const dogsSorted = dogs.slice().sort((a, b) => a.recFood - b.recFood);
+console.log(dogsSorted);
+
 // Bank App
 const displayMovements = function (movement, sort = false) {
   containerMovements.innerHTML = '';
@@ -356,3 +394,9 @@ btnSort.addEventListener("click", function (e) {
   sorted = !sorted
 })
 
+const [deposits, withdrawal] = accounts.flatMap((acc) => acc.movements)
+  .reduce((sum, cur) => {
+    sum[cur > 0 ? 0 : 1] += cur
+    return sum
+  }, [0, 0])
+console.log(deposits, withdrawal);
